@@ -1,4 +1,4 @@
-package com.example.boardfragment
+package com.example.boardfragment.di
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

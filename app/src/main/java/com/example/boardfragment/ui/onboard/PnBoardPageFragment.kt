@@ -9,14 +9,18 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.example.boardfragment.R
 import com.example.boardfragment.databinding.FragmentPnBoardPageBinding
-import com.example.boardfragment.utils.Preference
+import com.example.boardfragment.ui.utils.Preference
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-class PnBoardPageFragment(
-     var listenerSkipPage:() -> Unit,
-     var  listenerNextPage:() -> Unit
-        ) : Fragment() {
+@AndroidEntryPoint
+
+class PnBoardPageFragment @Inject constructor(
+    private val listenerNextPage: () -> Unit,
+    private var listenerSkipPage: () -> Unit
+) : Fragment() {
     private lateinit var binding: FragmentPnBoardPageBinding
+    @Inject lateinit var prefs: Preference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +40,8 @@ class PnBoardPageFragment(
            listenerSkipPage.invoke()
         }
         binding.btnStart.setOnClickListener {
-            Preference(requireContext()).boardShowed(true)
             findNavController().navigate(R.id.navigation_home)
+            prefs.boardShowed(true)
         }
     }
 
